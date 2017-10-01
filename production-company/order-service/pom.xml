@@ -44,7 +44,7 @@
           <xjbSources>
             <xjbSource>src/main/resources/global-binding.xjb</xjbSource>
           </xjbSources>
-          <packageName>com.ms.spring.integration.sample.xsd</packageName>
+          <packageName>com.ms.orderservice.integration.xsd</packageName>
         </configuration>
       </plugin>
     </plugins>

@@ -1,0 +1,33 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.example.com/bmd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="NewOrderEvent">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:dateTime" name="eventDatetime"/>
+                <xs:element name="Item" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:short" name="Id"/>
+                            <xs:element type="xs:int" name="ItemCode"/>
+                            <xs:element type="xs:string" name="ItemName"/>
+                            <xs:element type="xs:string" name="ItemDescription"/>
+                            <xs:element type="xs:short" name="NumberOfItems"/>
+                            <xs:element type="xs:string" name="Price"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Address">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="RecipientName"/>
+                            <xs:element type="xs:string" name="Street"/>
+                            <xs:element type="xs:string" name="HouseNumber"/>
+                            <xs:element type="xs:string" name="PostalCode"/>
+                            <xs:element type="xs:string" name="City"/>
+                            <xs:element type="xs:string" name="EMail"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
