@@ -1,21 +1,23 @@
 package com.ms.orderservice.configuration.integration;
 
 
-import com.ms.orderservice.integration.xsd.Event;
+import com.ms.orderservice.integration.xsd.NewOrderEvent;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
-import java.io.StringReader;
+import javax.xml.bind.Marshaller;
+import java.io.StringWriter;
 
 
 @Configuration
-public class AbstractOrderRealizationFlowConfiguration {
+public class AbstractOrderFlowConfiguration {
 
     @Bean
     public CachingConnectionFactory rabbitMQConnection(){
@@ -28,24 +30,29 @@ public class AbstractOrderRealizationFlowConfiguration {
     }
 
     @Bean
-    public AmqpTemplate amqpTemplate(){
+    public AmqpTemplate amqpTemplate() {
         AmqpTemplate amqpTemplate = new RabbitTemplate(rabbitMQConnection());
         return amqpTemplate;
     }
 
     @Bean
-    public Unmarshaller eventUnmarshaler() throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(Event.class);
-        return jaxbContext.createUnmarshaller();
+    public JAXBContext jaxbContextNewOrderEvent() throws JAXBException {
+        return JAXBContext.newInstance(NewOrderEvent.class);
     }
 
-    protected Event performUnmarshaling(String xml) {
-        Event event=null;
+    @Bean
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    public Marshaller newOrderEventMarshaler() throws JAXBException {
+        return jaxbContextNewOrderEvent().createMarshaller();
+    }
+
+    protected String performMarshaling(NewOrderEvent newOrderEvent) {
+        StringWriter writer = new StringWriter();
         try {
-             event = (Event) eventUnmarshaler().unmarshal(new StringReader(xml));
+            newOrderEventMarshaler().marshal(newOrderEvent,writer);
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-        return event;
+        return writer.toString();
     }
 }

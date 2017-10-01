@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@Import({OrderRealizationIncommingFlowConfiguration.class, OrderRealizationOutgoingFlowConfiguration.class})
-@PropertySource("integration-flow.properties")
-public class OrderServiceIntegrationConfiguration {
+@Import({NewOrderIncommingFlowConfiguration.class})
+@PropertySource("warehouse-integration-flow.properties")
+public class WarehouseIntegrationConfiguration {
 }
