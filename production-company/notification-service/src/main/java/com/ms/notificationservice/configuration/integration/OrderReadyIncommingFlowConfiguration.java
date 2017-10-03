@@ -1,6 +1,8 @@
 package com.ms.notificationservice.configuration.integration;
 
 import com.ms.notifiactionervice.integration.xsd.OrderReady;
+import com.ms.notificationservice.service.MailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
@@ -16,18 +18,25 @@ import javax.xml.bind.Unmarshaller;
 import java.io.StringReader;
 import java.util.concurrent.Executors;
 
-public class OrderReadyIncommingFlowConfiguration extends  AbstractNotificationFlowConfiguration{
+public class OrderReadyIncommingFlowConfiguration extends AbstractNotificationFlowConfiguration {
 
     @Value("${orderReadyEvent.in.amqp.queue}")
     private String queueOrderReady;
+
+    @Autowired
+    private MailService mailService;
 
     @Bean
     public IntegrationFlow amqpNewOrderEventInboundFlow() {
         return IntegrationFlows.from(Amqp.inboundAdapter(rabbitMQConnection(), queueOrderReady))
                 .channel(MessageChannels.executor(Executors.newCachedThreadPool()))
                 .transform(this::performOrderReadyUnmarshaling)
-                .handle( m -> System.out.println(m.getPayload()))
+                .handle(m -> sentNotifiation((OrderReady) m.getPayload()))
                 .get();
+    }
+
+    private void sentNotifiation(OrderReady orderReady) {
+        mailService.sendMessageOrderIsReady(orderReady.getEMail());
     }
 
     @Bean
@@ -40,7 +49,6 @@ public class OrderReadyIncommingFlowConfiguration extends  AbstractNotificationF
     public Unmarshaller orderReadyEventUnmarshaler() throws JAXBException {
         return jaxbContextOrderReadyEvent().createUnmarshaller();
     }
-
 
 
     protected OrderReady performOrderReadyUnmarshaling(String xml) {

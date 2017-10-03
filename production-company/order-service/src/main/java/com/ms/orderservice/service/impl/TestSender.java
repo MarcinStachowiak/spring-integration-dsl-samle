@@ -59,7 +59,7 @@ public class TestSender {
         addess.setPostalCode("00-111");
         addess.setRecipientName("Jan Kowalski2");
         addess.setStreet("aaa");
-        addess.setEMail("asasas");
+        addess.setEMail("marcin.stachowiak.ms@gmail.com");
 
 
         newOrderEvent.setAddress(addess);

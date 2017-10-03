@@ -9,7 +9,7 @@ import org.springframework.integration.config.EnableIntegration;
 
 @SpringBootApplication
 @EnableIntegration
-@ComponentScan("com.ms.warehouseservice")
+@ComponentScan("com.ms.notificationservice")
 @Import(NotificationIntegrationConfiguration.class)
 public class NotificationApplicationConfiguration {
     public static void main(String[] args) {
