@@ -69,7 +69,7 @@ public class TestSender {
                 .setHeader("sentTime", "2")
                 .build();
 int i=0;
-while (i<10000) {
+while (i<1) {
     newOrderOutChannel.send(message);
     i++;
 }

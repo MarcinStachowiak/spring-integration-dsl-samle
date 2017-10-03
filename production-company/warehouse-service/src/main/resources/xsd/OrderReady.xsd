@@ -1,0 +1,12 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.example.com/bmd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="OrderReady">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:dateTime" name="EventDateTime"/>
+                <xs:element type="xs:string" name="PriorityRealization"/>
+                <xs:element type="xs:string" name="RecipientName"/>
+                <xs:element type="xs:string" name="EMail"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
