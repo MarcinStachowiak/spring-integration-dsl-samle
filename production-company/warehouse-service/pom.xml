@@ -45,7 +45,7 @@
           <xjbSources>
             <xjbSource>src/main/resources/global-binding.xjb</xjbSource>
           </xjbSources>
-          <packageName>com.ms.orderservice.integration.xsd</packageName>
+          <packageName>com.ms.warehouseservice.integration.xsd</packageName>
         </configuration>
       </plugin>
     </plugins>
